@@ -17,9 +17,11 @@ import User from "./models/userModel.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 let app = express();
-app.listen(3000, () => {
-    console.log("Server is Listening");
-})
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Server is listening on port ${port}`);
+});
+
 app.use(methodOverride('_method'));
 
 app.engine('ejs', ejsMate);
@@ -56,7 +58,7 @@ const mongoStore=MongoStore.create({
     touchAfter:24*3600, // used to ensure that session information is saved if there is no interaction with server
 })
 
-mongoStore.on("error",()=>{
+mongoStore.on("error",(err)=>{
     console.log("error in mongo session store",err);
 })
 
