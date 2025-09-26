@@ -1,0 +1,112 @@
+<% layout("/layouts/boilerplate") -%>
+
+<body>
+  <!-- 🔷 Outer Container for Centered Card -->
+  <div class="d-flex justify-content-center card-outer mt-5">
+    <div class="card show-card" style="width: 80%;">
+
+      <!-- 🔷 Listing Title -->
+      <h2 class="text-center mt-3">
+        <%= singleListing.title %>
+      </h2>
+
+      <!-- 🔷 Listing Details Section -->
+      <div class="row g-4 p-3 align-items-start">
+        <!-- 🖼️ Image Column -->
+        <div class="col-md-6">
+          <img src="<%= singleListing.image.url %>" class="img-fluid rounded show-img" alt="image"
+            style="height: 40vh; object-fit: cover;">
+        </div>
+
+        <!-- 📄 Text Column -->
+        <div class="col-md-6">
+          <ul class="list-unstyled">
+            <li class="des mb-2">Owned By <i><%= singleListing.owner.username %></i></li>
+            <li class="des mb-2"><%= singleListing.description %></li>
+            <!-- <li class="price mb-2">&#8377;<%= singleListing.price.toLocaleString("en-IN") %></li> -->
+            <li class="loc mb-2"><%= singleListing.location %></li>
+            <li class="count mb-2"><%= singleListing.country %></li>
+          </ul>
+
+          <!-- ✏️ Edit/Delete Buttons for Owner -->
+          <% if (currentUser && currentUser._id.equals(singleListing.owner._id)) { %>
+            <div class="buttons d-flex gap-3 mt-3">
+              <form action="/listings/<%= singleListing._id %>/edit" method="get">
+                <button class="btn btn-primary px-5 py-2 rounded">Edit</button>
+              </form>
+              <form action="/listings/<%= singleListing._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-danger px-5 py-2 rounded">Delete</button>
+              </form>
+            </div>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- 💬 Review Section -->
+      <div class="col-12">
+        <% if (currentUser) { %>
+          <hr>
+          <h4 class="mb-3">Leave a Review</h4>
+
+          <!-- 📝 Review Form -->
+          <form action="/listings/<%= singleListing._id %>/reviews" method="POST" novalidate class="needs-validation">
+            <div class="mb-3">
+              <label for="Username" class="form-label">Username</label>
+              <input type="text" id="rating" name="review[username]" class="form-control" required>
+            </div>
+
+            <!-- ⭐ Rating Input -->
+            <div class="mb-3">
+              <label for="no-rate">Rating</label>
+              <fieldset class="starability-growRotate">
+                <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                <label for="first-rate1" title="Terrible">1 star</label>
+                <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                <label for="first-rate2" title="Not good">2 stars</label>
+                <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                <label for="first-rate3" title="Average">3 stars</label>
+                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                <label for="first-rate4" title="Very good">4 stars</label>
+                <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                <label for="first-rate5" title="Amazing">5 stars</label>
+              </fieldset>
+            </div>
+
+            <!-- 💬 Comment Input -->
+            <div class="mb-3">
+              <label for="comment" class="form-label">Comments</label>
+              <textarea name="review[comment]" id="comment" rows="5" class="form-control w-100" placeholder="Write your thoughts..." required></textarea>
+              <div class="invalid-feedback">Please add some comment for review</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        <% } %>
+
+        <!-- 📃 All Reviews Section -->
+        
+        <% if (singleListing.review.length > 0) { %>
+          <hr>
+          <div class="row">
+            <h4>All Reviews</h4>
+            <% for (review of singleListing.review) { %>
+              <div class="card review-card col-5">
+                <div class="card-body">
+                  <h5 class="review-username"><%= review.username %></h5>
+                  <p class="review-comment"><%= review.comment %></p>
+                  <p class="starability-result" data-rating="<%= review.rating %>"></p>
+                </div>
+
+                <!-- 🗑️ Delete Review Button -->
+                <form action="/listings/<%= singleListing._id %>/reviews/<%= review._id %>?_method=DELETE" class="mb-3" method="POST">
+                  <button class="btn btn-dark btn-small">Delete</button>
+                </form>
+              </div>
+            <% } %>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</body>

@@ -1,0 +1,183 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+  #filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .filter {
+    text-align: center;
+    margin-top: 1rem;
+    opacity: 0.8;
+    text-decoration: none;
+    color: black;
+  }
+
+  .filter:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+
+  .toggle {
+    border: 1px solid black;
+    border-radius: 1rem;
+    height: 3.5rem;
+    padding: 1rem;
+    margin-left: 1rem;
+  }
+
+  .gst-sum {
+    display: none;
+  }
+
+  /* ✅ Hide filters on mobile (≤576px) */
+  @media (max-width: 576px) {
+    #filters {
+      display: none;
+    }
+    .row > .col {
+      flex: 0 0 100%;
+      max-width: 100%; /* 1 card per row */
+    }
+  }
+
+  /* ✅ Small tablets (577px–767px): 1 card per row */
+  @media (min-width: 577px) and (max-width: 767px) {
+    #filters {
+      display: none;
+    }
+    .row > .col {
+      flex: 0 0 100%;
+      max-width: 100%; /* 1 card per row */
+    }
+  }
+
+  /* ✅ Large tablets (768px–992px): 2 cards per row */
+  @media (min-width: 768px) and (max-width: 992px) {
+    #filters {
+      display: none;
+    }
+    .row > .col {
+      flex: 0 0 50%;
+      max-width: 50%; /* 2 cards per row */
+    }
+  }
+</style>
+
+<div id="filters">
+  <a href="/listings?category=Trending" class="filter">
+    <div><i class="fa-solid fa-fire"></i></div>
+    <p>Trending</p>
+  </a>
+
+  <a href="/listings?category=Rooms" class="filter">
+    <div><i class="fa-solid fa-bed"></i></div>
+    <p>Rooms</p>
+  </a>
+
+  <a href="/listings?category=Iconic Cities" class="filter">
+    <div><i class="fa-solid fa-mountain-city"></i></div>
+    <p>Iconic Cities</p>
+  </a>
+
+  <a href="/listings?category=Mountains" class="filter">
+    <div><i class="fa-solid fa-mountain-sun"></i></div>
+    <p>Mountains</p>
+  </a>
+
+  <a href="/listings?category=Camping" class="filter">
+    <div><i class="fa-solid fa-campground"></i></div>
+    <p>Camping</p>
+  </a>
+
+  <a href="/listings?category=Pools" class="filter">
+    <div><i class="fa-solid fa-person-swimming"></i></div>
+    <p>Amazing Pools</p>
+  </a>
+
+  <a href="/listings?category=Farms" class="filter">
+    <div><i class="fa-solid fa-cow"></i></div>
+    <p>Farms</p>
+  </a>
+
+  <a href="/listings?category=Arctic" class="filter">
+    <div><i class="fa-solid fa-snowman"></i></div>
+    <p>Arctic</p>
+  </a>
+
+  <a href="/listings?category=Beach" class="filter">
+    <div><i class="fa-solid fa-umbrella-beach"></i></div>
+    <p>Beach</p>
+  </a>
+
+  <a href="/listings?category=Domes" class="filter">
+    <div><i class="fa-solid fa-igloo"></i></div>
+    <p>Domes</p>
+  </a>
+
+  <!-- ✅ Toggle switch -->
+  <div class="toggle">
+    <div class="form-check-reverse form-switch">
+      <input class="form-check-input" type="checkbox" id="checkNativeSwitch" switch>
+      <label class="form-check-label" for="checkNativeSwitch">
+        Show total with GST
+      </label>
+    </div>
+  </div>
+</div>
+
+
+<body>
+  <div class="container mt-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+      <% for (let listing of listings) { %>
+        <div class="col">
+          <a href="/listings/<%= listing._id %>">
+            <div class="card custom-card">
+              <img src="<%= listing.image.url %>" class="card-img-top custom-img" alt="Listing Image" style="height: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title"><b><%= listing.title %></b></h5>
+
+                <!-- ✅ PRICE DISPLAY -->
+                <p class="card-text">
+                  <span class="base-price" data-price="<%= listing.price %>">
+                    &#8377;<%= listing.price.toLocaleString("en-IN") %> / night
+                  </span>
+                  <span class="gst-sum">
+                    &#8377;<%= Math.round(listing.price * 1.18).toLocaleString("en-IN") %> / night (incl. GST)
+                  </span>
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- ✅ ORIGINAL SCRIPT KEPT SAME -->
+  <script>
+    const taxSwitch = document.getElementById("checkNativeSwitch");
+
+    taxSwitch.addEventListener("click", () => {
+      const basePrices = document.getElementsByClassName("base-price");
+      const gstSums = document.getElementsByClassName("gst-sum");
+
+      for (let i = 0; i < basePrices.length; i++) {
+        const base = basePrices[i];
+        const gst = gstSums[i];
+        if (gst.style.display !== "inline") {
+          gst.style.display = "inline";
+          base.style.display = "none";
+        } else {
+          gst.style.display = "none";
+          base.style.display = "inline";
+        }
+      }
+    });
+  </script>
+</body>
+</html>

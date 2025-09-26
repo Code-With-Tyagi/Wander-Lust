@@ -1,0 +1,34 @@
+<% layout("/layouts/boilerplate") %>
+
+    <body>
+        <div class="container py-5">
+            <div class="row justify-content-center">
+
+                <div class="col-md-6">
+                    <form action="/signup" method="post" class="bg-white p-4 rounded shadow needs-validation"
+                        novalidate>
+                        <h2 class="text-center mb-4">SigUp for WanderLust</h2>
+
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                            <div class="valid-feedback">Looks Good!</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="text" class="form-control"  id="email" name="email" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control"  id="password" name="password" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">SignUp</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </body>

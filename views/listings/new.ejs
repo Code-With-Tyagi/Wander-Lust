@@ -1,0 +1,70 @@
+<% layout("/layouts/boilerplate") %>
+
+  <body>
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <form action="/listings" method="post" class="bg-white p-4 rounded shadow needs-validation" novalidate
+            enctype="multipart/form-data">
+            <h2 class="text-center mb-4">Create New Listing</h2>
+
+            <div class="mb-3">
+              <label for="title" class="form-label">Title</label>
+              <input type="text" class="form-control" id="title" name="listing[title]" required>
+              <div class="valid-feedback">Title Looks Good</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea class="form-control" id="description" name="listing[description]" required></textarea>
+              <div class="invalid-feedback">Please enter a short description</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="image" class="form-label">Image</label>
+              <input type="file" class="form-control" id="image" name="listing[image]">
+            </div>
+
+            <div class="mb-3">
+              <label for="price" class="form-label">Price</label>
+              <input class="form-control" id="price" name="listing[price]" required>
+              <div class="invalid-feedback">Price should be valid</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="country" class="form-label">Country</label>
+              <input type="text" class="form-control" id="country" name="listing[country]" required>
+              <div class="invalid-feedback">Country Name should be valid</div>
+            </div>
+
+            <div class="mb-4">
+              <label for="location" class="form-label">Location</label>
+              <input type="text" class="form-control" id="location" name="listing[location]" required>
+              <div class="invalid-feedback">Location should be valid</div>
+            </div>
+
+            <div class="mb-4">
+              <label for="category" class="form-label">Category</label>
+              <select class="form-select" id="category" name="listing[category]" required>
+                <option value="" disabled selected>Select a category</option>
+                <option value="Trending">Trending</option>
+                <option value="Rooms">Rooms</option>
+                <option value="Iconic Cities">Iconic Cities</option>
+                <option value="Mountains">Mountains</option>
+                <option value="Camping">Camping</option>
+                <option value="Pools">Amazing Pools</option>
+                <option value="Farms">Farms</option>
+                <option value="Arctic">Arctic</option>
+                <option value="Beach">Beach</option>
+                <option value="Domes">Domes</option>
+              </select>
+              <div class="invalid-feedback">Please select a category</div>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary w-100">Create</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
