@@ -100,12 +100,6 @@ app.use("/listings",listingRouter);
 app.use("/listings",reviewRouter);
 app.use("/",userRouter);
 
-// This is used to handle all the route which does not exists
-app.use((req, res, next) => {
-    next(new ExpressError(404, "Page not found"));
-});
-
-
 // Error Handling Route
 app.use((error, req, res, next) => {
     let { status = 500, message = "Something Went Wrong!" } = error;
