@@ -1,16 +1,14 @@
 <% layout("/layouts/boilerplate") -%>
 
-<% layout("/layouts/boilerplate") -%>
-
 <style>
-  /* 🔹 Base review card style */
+  /* 🔹 Review Card Styling */
   .review-card {
     margin: 10px;
-    flex: 0 0 45%;   /* default: 2 cards per row */
+    flex: 0 0 45%; /* default: 2 cards per row */
     max-width: 45%;
   }
 
-  /* ✅ Mobile (≤576px): 1 card per row */
+  /* ✅ Responsive review cards */
   @media (max-width: 576px) {
     .review-card {
       flex: 0 0 100%;
@@ -18,7 +16,6 @@
     }
   }
 
-  /* ✅ Small tablets (577px–767px): 1 card per row */
   @media (min-width: 577px) and (max-width: 767px) {
     .review-card {
       flex: 0 0 100%;
@@ -26,7 +23,6 @@
     }
   }
 
-  /* ✅ Large tablets (768px–992px): 2 cards per row */
   @media (min-width: 768px) and (max-width: 992px) {
     .review-card {
       flex: 0 0 48%;
@@ -34,15 +30,21 @@
     }
   }
 
-  /* ✅ Desktop (≥993px): 2 cards per row (default) */
   @media (min-width: 993px) {
     .review-card {
       flex: 0 0 45%;
       max-width: 45%;
     }
   }
-</style>
 
+  /* 🔹 Show Page Image Styling (match index.js card width) */
+  .show-img {
+    width: 100%; /* fills parent column width */
+    height: 18rem; /* same as index.js */
+    object-fit: cover;
+    border-radius: 0.25rem;
+  }
+</style>
 
 <body>
   <!-- 🔷 Outer Container for Centered Card -->
@@ -58,8 +60,7 @@
       <div class="row g-4 p-3 align-items-start">
         <!-- 🖼️ Image Column -->
         <div class="col-md-6">
-          <img src="<%= singleListing.image.url %>" class="img-fluid rounded show-img" alt="image"
-            style="height: 40vh; object-fit: cover;">
+          <img src="<%= singleListing.image.url %>" class="show-img" alt="Listing Image">
         </div>
 
         <!-- 📄 Text Column -->
@@ -67,7 +68,6 @@
           <ul class="list-unstyled">
             <li class="des mb-2">Owned By <i><%= singleListing.owner.username %></i></li>
             <li class="des mb-2"><%= singleListing.description %></li>
-            <!-- <li class="price mb-2">&#8377;<%= singleListing.price.toLocaleString("en-IN") %></li> -->
             <li class="loc mb-2"><%= singleListing.location %></li>
             <li class="count mb-2"><%= singleListing.country %></li>
           </ul>
@@ -92,14 +92,12 @@
           <hr>
           <h4 class="mb-3">Leave a Review</h4>
 
-          <!-- 📝 Review Form -->
           <form action="/listings/<%= singleListing._id %>/reviews" method="POST" novalidate class="needs-validation">
             <div class="mb-3">
               <label for="Username" class="form-label">Username</label>
               <input type="text" id="rating" name="review[username]" class="form-control" required>
             </div>
 
-            <!-- ⭐ Rating Input -->
             <div class="mb-3">
               <label for="no-rate">Rating</label>
               <fieldset class="starability-growRotate">
@@ -117,7 +115,6 @@
               </fieldset>
             </div>
 
-            <!-- 💬 Comment Input -->
             <div class="mb-3">
               <label for="comment" class="form-label">Comments</label>
               <textarea name="review[comment]" id="comment" rows="5" class="form-control w-100" placeholder="Write your thoughts..." required></textarea>
@@ -128,8 +125,6 @@
           </form>
         <% } %>
 
-        <!-- 📃 All Reviews Section -->
-        
         <% if (singleListing.review.length > 0) { %>
           <hr>
           <div class="row">
@@ -142,7 +137,6 @@
                   <p class="starability-result" data-rating="<%= review.rating %>"></p>
                 </div>
 
-                <!-- 🗑️ Delete Review Button -->
                 <form action="/listings/<%= singleListing._id %>/reviews/<%= review._id %>?_method=DELETE" class="mb-3" method="POST">
                   <button class="btn btn-dark btn-small">Delete</button>
                 </form>
@@ -154,3 +148,4 @@
     </div>
   </div>
 </body>
+
