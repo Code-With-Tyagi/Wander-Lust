@@ -1,5 +1,49 @@
 <% layout("/layouts/boilerplate") -%>
 
+<% layout("/layouts/boilerplate") -%>
+
+<style>
+  /* 🔹 Base review card style */
+  .review-card {
+    margin: 10px;
+    flex: 0 0 45%;   /* default: 2 cards per row */
+    max-width: 45%;
+  }
+
+  /* ✅ Mobile (≤576px): 1 card per row */
+  @media (max-width: 576px) {
+    .review-card {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+
+  /* ✅ Small tablets (577px–767px): 1 card per row */
+  @media (min-width: 577px) and (max-width: 767px) {
+    .review-card {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+
+  /* ✅ Large tablets (768px–992px): 2 cards per row */
+  @media (min-width: 768px) and (max-width: 992px) {
+    .review-card {
+      flex: 0 0 48%;
+      max-width: 48%;
+    }
+  }
+
+  /* ✅ Desktop (≥993px): 2 cards per row (default) */
+  @media (min-width: 993px) {
+    .review-card {
+      flex: 0 0 45%;
+      max-width: 45%;
+    }
+  }
+</style>
+
+
 <body>
   <!-- 🔷 Outer Container for Centered Card -->
   <div class="d-flex justify-content-center card-outer mt-5">
